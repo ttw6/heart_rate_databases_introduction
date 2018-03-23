@@ -20,11 +20,11 @@ link = "http://vcm-3574.vm.duke.edu:5000"
 r1 = requests.post(link+"/api/heart_rate", json=input1)
 print(r1.json())
 
-#r2 = requests.get(link+"/api/heart_rate/suyash@suyashkumar.com")
-#print(r2.json())
+r2 = requests.get(link+"/api/heart_rate/suyash@suyashkumar.com")
+print(r2.json())
 
-#r3 = requests.get(link+"/api/heart_rate/average/suyash@suyashkumar.com")
-#print(r3.json())
+r3 = requests.get(link+"/api/heart_rate/average/suyash@suyashkumar.com")
+print(r3.json())
 
-#r4 = requests.post(link+"/api/heart_rate/interval_average")
-#print(r4.json())
+r4 = requests.post(link+"/api/heart_rate/interval_average")
+print(r4.json())

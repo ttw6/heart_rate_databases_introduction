@@ -20,10 +20,10 @@ def heart_rate():
     r = request.get_json()
     try:
         add_heart_rate(r["user_email"], r["heart_rate"], datetime.datetime.now())
-        return "Updated Info"
+        return jsonify("Updated Info")
     except:
         create_user(r["user_email"], r["user_age"], r["heart_rate"])
-        return "Created new user"
+        return jsonify("Created new user")
 
 
 @app.route("/api/heart_rate/<user_email>", methods=["GET"])
@@ -33,10 +33,12 @@ def heart_meas(user_email):
     :param user_email:
     """
     try:
-        info = print_user(user_email)
-        return jsonify(info)
+        wanted = {
+            "info": "{}".format(user_email)
+        }
+        return jsonify(wanted)
     except:
-        return "Unknown User"
+        return jsonify("Unknown User")
 
 
 @app.route("/api/heart_rate/average/<user_email>", methods=["GET"])
@@ -48,7 +50,7 @@ def heart_ave(user_email):
         ave = hr_ave(user_email)
         return jsonify(ave)
     except:
-        return "Unknown User"
+        return jsonify("Unknown User")
 
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
@@ -61,4 +63,4 @@ def heart_int_ave(user_email):
         ave = hr_int_ave(r["user_email"])
         return jsonify(ave)
     except:
-        return "Unknown User"
+        return jsonify("Unknown User")
