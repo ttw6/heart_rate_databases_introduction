@@ -1,6 +1,7 @@
 from pymodm import connect
 import models
 import datetime
+import numpy as np
 
 def add_heart_rate(email, heart_rate, time):
     user = models.User.objects.raw({"_id": email}).first() # Get the first user where _id=email
@@ -19,6 +20,22 @@ def print_user(email):
     print(user.email)
     print(user.heart_rate)
     print(user.heart_rate_times)
+
+def hr_ave(email):
+    user = models.User.objects.raw({"_id": email}).first()
+    average = np.mean(user.heart_rate)
+    return average
+
+def hr_int_ave(email):
+    user = models.User.objects.raw({"_id": email}).first()
+    time = user.heart_rate_times
+    given_time = datetime.datetime.strptime(ref_time, "%Y-%m-%d %H:%M:%S.%f")
+    hr_report = []
+    for idx, val in enumerate(time):
+        if time[idx] >= given_time:
+            hr_report.append(user.heart_rate[idx])
+    ave_report = np.mean(hr_report)
+    return ave_report
 
 if __name__ == "__main__":
     connect("mongodb://vcm-3574.vm.duke.edu:27017/heart_rate_databases_introduction") # open up connection to db
