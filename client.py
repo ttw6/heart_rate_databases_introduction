@@ -13,8 +13,8 @@ input2 = {
     "heart_rate_average_since": "2018-03-09 11:00:36.372339"
 }
 
-# link = "http://vcm-3574.vm.duke.edu:5000"
-link = "http://127.0.0.1:5000/"
+link = "http://vcm-3574.vm.duke.edu:5000"
+# link = "http://127.0.0.1:5000/"
 
 # Request
 r1 = requests.post(link+"/api/heart_rate", json=input1)

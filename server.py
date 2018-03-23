@@ -20,8 +20,10 @@ def heart_rate():
     r = request.get_json()
     try:
         add_heart_rate(r["user_email"], r["heart_rate"], datetime.datetime.now())
+        return "Updated Info"
     except:
         create_user(r["user_email"], r["user_age"], r["heart_rate"])
+        return "Created new user"
 
 
 @app.route("/api/heart_rate/<user_email>", methods=["GET"])
