@@ -20,7 +20,7 @@ def heart_rate():
     r = request.get_json()  # inputs: user_email, user_age, heart_rate
     # Validate input
     if not isinstance(r["user_email"], str) or \
-        not isinstance(r["user_age", int]) or \
+        not isinstance(r["user_age"], int) or \
         not isinstance(r["heart_rate"], int):
         return "Error in inputs"
     else:
