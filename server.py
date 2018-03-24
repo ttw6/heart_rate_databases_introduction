@@ -17,7 +17,15 @@ def heart_rate():
     """ Store inputted measurement for user w/ email
 
     """
-    r = request.get_json()
+    r = request.get_json()  # inputs: user_email, user_age, heart_rate
+    # Validate input
+    if not isinstance(r["user_email"], str) or \
+        not isinstance(r["user_age", int]) or \
+        not isinstance(r["heart_rate"], int):
+        return "Error in inputs"
+    else:
+        pass
+    # Function
     try:
         add_heart_rate(r["user_email"], r["heart_rate"], datetime.datetime.now())
         return jsonify("Updated {} Info".format(r["user_email"]))
@@ -55,8 +63,17 @@ def heart_int_ave():
     """ Calculate and return average heart rate for user since the time given
 
     """
+    r = request.get_json()  # inputs: user_email, heart_rate_average_since
+    if not isinstance(r["user_email"], str):
+        return "Check email"
+    else:
+        pass
     try:
-        r = request.get_json()
+        datetime.datetime.strptime(r["heart_rate_average_since"], "%Y-%m-%d %H:%M:%S.%f")
+    except ValueError:
+        raise ValueError("Check date format")
+
+    try:
         ave = hr_int_ave(r["user_email"],r["heart_rate_average_since"])
         return jsonify(ave)
     except:
