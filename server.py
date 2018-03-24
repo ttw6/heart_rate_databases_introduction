@@ -20,7 +20,7 @@ def heart_rate():
     r = request.get_json()
     try:
         add_heart_rate(r["user_email"], r["heart_rate"], datetime.datetime.now())
-        return jsonify("Updated Info")
+        return jsonify("Updated {} Info".format(r["user_email"]))
     except:
         create_user(r["user_email"], r["user_age"], r["heart_rate"])
         return jsonify("Created new user")
@@ -56,8 +56,8 @@ def heart_int_ave():
 
     """
     try:
-        r = requests.getjson()
-        ave = hr_int_ave(r["user_email"])
+        r = request.get_json()
+        ave = hr_int_ave(r["user_email"],r["heart_rate_average_since"])
         return jsonify(ave)
     except:
         return jsonify("Unknown User")

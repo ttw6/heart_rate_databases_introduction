@@ -26,5 +26,5 @@ print(r2.json())
 r3 = requests.get(link+"/api/heart_rate/average/suyash@suyashkumar.com")
 print(r3.json())
 
-r4 = requests.post(link+"/api/heart_rate/interval_average")
+r4 = requests.post(link+"/api/heart_rate/interval_average", json=input2)
 print(r4.json())

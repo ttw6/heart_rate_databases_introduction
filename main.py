@@ -18,7 +18,7 @@ def create_user(email, age, heart_rate):
 def print_user(email):
     user = models.User.objects.raw({"_id": email}).first() # Get the first user where _id=email
     info = {
-        "user_email": user.user_email,
+        "user_email": user.email,
         "heart_rate": user.heart_rate,
         "heart_rate_times": user.heart_rate_times
     }
@@ -32,7 +32,7 @@ def hr_ave(email):
     average = np.mean(user.heart_rate)
     return average
 
-def hr_int_ave(email):
+def hr_int_ave(email,ref_time):
     user = models.User.objects.raw({"_id": email}).first()
     time = user.heart_rate_times
     given_time = datetime.datetime.strptime(ref_time, "%Y-%m-%d %H:%M:%S.%f")
