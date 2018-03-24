@@ -1,6 +1,7 @@
 from pymodm import connect
 import models
 import datetime
+import numpy as np
 
 def add_heart_rate(email, heart_rate, time):
     user = models.User.objects.raw({"_id": email}).first() # Get the first user where _id=email
@@ -16,12 +17,55 @@ def create_user(email, age, heart_rate):
 
 def print_user(email):
     user = models.User.objects.raw({"_id": email}).first() # Get the first user where _id=email
-    print(user.email)
-    print(user.heart_rate)
-    print(user.heart_rate_times)
+    info = {
+        "user_email": user.email,
+        "heart_rate": user.heart_rate,
+        "heart_rate_times": user.heart_rate_times
+    }
+    return info
+    #print(user.email)
+    #print(user.heart_rate)
+    #print(user.heart_rate_times)
+
+def hr_ave(email):
+    user = models.User.objects.raw({"_id": email}).first()
+    average = np.mean(user.heart_rate)
+    return average
+
+def hr_int_ave(email,ref_time):
+    user = models.User.objects.raw({"_id": email}).first()
+    time = user.heart_rate_times
+    given_time = datetime.datetime.strptime(ref_time, "%Y-%m-%d %H:%M:%S.%f")
+    hr_report = []
+    for idx, val in enumerate(time):
+        if time[idx] >= given_time:
+            hr_report.append(user.heart_rate[idx])
+    ave_report = np.mean(hr_report)
+    tachy_TF = is_tachy(user.age, ave_report)
+    results = {
+        "ave_report": ave_report,
+        "is_tachy": "Has Tachycardia: " + tachy_TF
+    }
+    return results
+
+def is_tachy(age, hr):
+    if age > 15 and hr > 100:
+        return "True"
+    elif age <= 15 and age >= 12 and hr > 119:
+        return "True"
+    elif age < 12 and age >= 8 and hr > 130:
+        return "True"
+    elif age < 8 and age >= 5 and hr > 133:
+        return "True"
+    elif age < 5 and age >= 3 and hr > 137:
+        return "True"
+    elif age < 3 and age >= 1 and hr > 151:
+        return "True"
+    else:
+        return "False"
 
 if __name__ == "__main__":
-    connect("mongodb://localhost:27017/heart_rate_app") # open up connection to db
+    connect("mongodb://vcm-3574.vm.duke.edu:27017/heart_rate_databases_introduction") # open up connection to db
     create_user(email="suyash@suyashkumar.com", age=24, heart_rate=60) # we should only do this once, otherwise will overwrite existing user
     add_heart_rate("suyash@suyashkumar.com", 60, datetime.datetime.now())
     print_user("suyash@suyashkumar.com")
