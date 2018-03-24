@@ -30,13 +30,10 @@ def heart_rate():
 def heart_meas(user_email):
     """ Return all heart rate measurements for user
 
-    :param user_email:
     """
     try:
-        wanted = {
-            "info": "{}".format(user_email)
-        }
-        return jsonify(wanted)
+        info = print_user(user_email)
+        return jsonify(info)
     except:
         return jsonify("Unknown User")
 
@@ -54,7 +51,7 @@ def heart_ave(user_email):
 
 
 @app.route("/api/heart_rate/interval_average", methods=["POST"])
-def heart_int_ave(user_email):
+def heart_int_ave():
     """ Calculate and return average heart rate for user since the time given
 
     """

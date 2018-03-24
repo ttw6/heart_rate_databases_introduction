@@ -17,9 +17,15 @@ def create_user(email, age, heart_rate):
 
 def print_user(email):
     user = models.User.objects.raw({"_id": email}).first() # Get the first user where _id=email
-    print(user.email)
-    print(user.heart_rate)
-    print(user.heart_rate_times)
+    info = {
+        "user_email": user.user_email,
+        "heart_rate": user.heart_rate,
+        "heart_rate_times": user.heart_rate_times
+    }
+    return info
+    #print(user.email)
+    #print(user.heart_rate)
+    #print(user.heart_rate_times)
 
 def hr_ave(email):
     user = models.User.objects.raw({"_id": email}).first()
