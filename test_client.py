@@ -1,5 +1,5 @@
 import pytest
-import server
+from server import *
 
 
 def validate_heart_rate_requests(r):
@@ -10,3 +10,9 @@ def validate_heart_rate_requests(r):
     }
 
     assert not jsonify(data)
+
+
+def test_tachy():
+    assert is_tachy(15, 200) == "True"
+    assert is_tachy(15, 90) == "False"
+    assert is_tachy(4, 150) == "True"

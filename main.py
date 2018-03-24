@@ -41,7 +41,28 @@ def hr_int_ave(email,ref_time):
         if time[idx] >= given_time:
             hr_report.append(user.heart_rate[idx])
     ave_report = np.mean(hr_report)
-    return ave_report
+    tachy_TF = is_tachy(user.age, ave_report)
+    results = {
+        "ave_report": ave_report,
+        "is_tachy": "Has Tachycardia: " + tachy_TF
+    }
+    return results
+
+def is_tachy(age, hr):
+    if age > 15 and hr > 100:
+        return "True"
+    elif age <= 15 and age >= 12 and hr > 119:
+        return "True"
+    elif age < 12 and age >= 8 and hr > 130:
+        return "True"
+    elif age < 8 and age >= 5 and hr > 133:
+        return "True"
+    elif age < 5 and age >= 3 and hr > 137:
+        return "True"
+    elif age < 3 and age >= 1 and hr > 151:
+        return "True"
+    else:
+        return "False"
 
 if __name__ == "__main__":
     connect("mongodb://vcm-3574.vm.duke.edu:27017/heart_rate_databases_introduction") # open up connection to db
