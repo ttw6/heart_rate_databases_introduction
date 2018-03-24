@@ -19,3 +19,16 @@ once your database is running and your connection string is set, you can run the
 ```
 python main.py
 ```
+# Components
+Website: http://vcm-3574.vm.duke.edu:5000/
+
+server.py is RESTful API
+
+main.py is compilation of helper functions
+
+models.py establish a MongoModel class
+
+client.py is the example of client requests
+
+test_client.py contains unit tests of functions, such as validating inputs (and is slight misnomer)
+
