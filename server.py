@@ -1,11 +1,12 @@
 from flask import Flask, jsonify, request
+from flask_cors imort CORS
 from pymodm import connect
 from main import *
 
 connect("mongodb://vcm-3574.vm.duke.edu:27017/heart_rate_app")
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route("/")
 def hello():

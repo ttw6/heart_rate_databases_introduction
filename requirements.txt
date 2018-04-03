@@ -3,3 +3,4 @@ flask
 requests
 numpy
 pytest
+flask-cors
